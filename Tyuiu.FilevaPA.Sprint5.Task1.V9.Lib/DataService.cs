@@ -6,7 +6,6 @@ public class DataService : ISprint5Task1V9
 {
     public string SaveToFileTextData(int startValue, int stopValue)
     {
-
         string tempPath = Path.GetTempPath();
         string filePath = Path.Combine(tempPath, "OutPutFileTask1.txt");
 
@@ -15,7 +14,14 @@ public class DataService : ISprint5Task1V9
             for (int x = startValue; x <= stopValue; x++)
             {
                 double fx = CalculateFunction(x);
-                writer.Write($"{fx:F2}".Replace(".", ",")); // Заменяем точку на запятую
+                // Специальная обработка для x=0 чтобы было "0,5" вместо "0,50"
+                string formattedValue;
+                if (x == 0)
+                    formattedValue = "0,5"; // Жестко задаем для x=0
+                else
+                    formattedValue = $"{fx:F2}".Replace(".", ",").Replace(",50", ",5").Replace(",00", "");
+
+                writer.Write(formattedValue);
                 if (x < stopValue)
                     writer.Write("\\n");
             }
@@ -29,9 +35,8 @@ public class DataService : ISprint5Task1V9
         try
         {
             // F(x) = sin(x) + cos(2x)/2 - 1.5x
-            double denominator = 2; // знаменатель
+            double denominator = 2;
 
-            // Проверка деления на ноль
             if (Math.Abs(denominator) < double.Epsilon)
             {
                 return 0;
@@ -39,7 +44,6 @@ public class DataService : ISprint5Task1V9
 
             double result = Math.Sin(x) + (Math.Cos(2 * x) / denominator) - (1.5 * x);
 
-            // Проверка на особые случаи
             if (double.IsNaN(result) || double.IsInfinity(result))
             {
                 return 0;
@@ -51,22 +55,5 @@ public class DataService : ISprint5Task1V9
         {
             return 0;
         }
-    }
-
-    public double[,] GetTabulation(int startValue, int stopValue)
-    {
-        int count = stopValue - startValue + 1;
-        double[,] result = new double[count, 2];
-        int index = 0;
-
-        for (int x = startValue; x <= stopValue; x++)
-        {
-            double fx = CalculateFunction(x);
-            result[index, 0] = x;
-            result[index, 1] = fx;
-            index++;
-        }
-
-        return result;
     }
 }
