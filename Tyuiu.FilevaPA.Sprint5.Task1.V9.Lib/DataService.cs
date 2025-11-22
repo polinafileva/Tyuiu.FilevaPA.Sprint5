@@ -6,7 +6,8 @@ public class DataService : ISprint5Task1V9
 {
     public string SaveToFileTextData(int startValue, int stopValue)
     {
-        string path = $"OutPutFileTask1.txt";
+        
+        string path = "OutPutFileTask1.txt"; // Будет создан в bin/Debug/net8.0/
 
         using (StreamWriter writer = new StreamWriter(path))
         {
@@ -28,9 +29,8 @@ public class DataService : ISprint5Task1V9
         try
         {
             // F(x) = sin(x) + cos(2x)/2 - 1
-            double denominator = 2; // знаменатель
+            double denominator = 2;
 
-            // Проверка деления на ноль
             if (Math.Abs(denominator) < double.Epsilon)
             {
                 return 0;
@@ -38,7 +38,6 @@ public class DataService : ISprint5Task1V9
 
             double result = Math.Sin(x) + (Math.Cos(2 * x) / denominator) - 1;
 
-            // Проверка на особые случаи
             if (double.IsNaN(result) || double.IsInfinity(result))
             {
                 return 0;
@@ -50,26 +49,5 @@ public class DataService : ISprint5Task1V9
         {
             return 0;
         }
-    }
-
-    public double[,] CalculateTabulation(int startValue, int stopValue)
-    {
-        int count = stopValue - startValue + 1;
-        double[,] result = new double[count, 2];
-        int index = 0;
-
-        for (int x = startValue; x <= stopValue; x++)
-        {
-            double fx = CalculateFunction(x);
-            result[index, 0] = x;
-            result[index, 1] = fx;
-            index++;
-        }
-        // Создание пути к файлу
-        string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask1.txt");
-
-       
-
-        return result;
     }
 }
