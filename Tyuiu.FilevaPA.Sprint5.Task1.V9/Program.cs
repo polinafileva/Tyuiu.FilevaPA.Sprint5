@@ -24,79 +24,39 @@ internal class Program
         Console.WriteLine("* При делении на ноль вернуть 0. Результат сохранить в файл и вывести    *");
         Console.WriteLine("* на консоль в таблицу. Округлить до двух знаков после запятой.          *");
         Console.WriteLine("***************************************************************************");
-        Console.WriteLine("* ИСХОДНЫЕ ДАННЫЕ:                                                        *");
-        Console.WriteLine("***************************************************************************");
+        Console.WriteLine("* ИСХОДНЫЕ ДАННЫЕ:                                                      *");
+        Console.WriteLine("**************************************************************************");
 
         int startValue = -5;
         int stopValue = 5;
 
-        Console.WriteLine($"Начало диапазона: {startValue}");
-        Console.WriteLine($"Конец диапазона: {stopValue}");
+        Console.WriteLine("Функция: F(x) = sin(x) + cos(2x)/2 - 1");
+        Console.WriteLine($"Диапазон: [{startValue}; {stopValue}]");
         Console.WriteLine($"Шаг: 1");
-        Console.WriteLine($"Функция: F(x) = sin(x) + cos(2x)/2 - 1 + 5x");
-
-        Console.WriteLine("***************************************************************************");
-        Console.WriteLine("* РЕЗУЛЬТАТ:                                                              *");
-        Console.WriteLine("***************************************************************************");
-
-        // Вызываем метод SaveToFileTextData
-        string resultPath = ds.SaveToFileTextData(startValue, stopValue);
-
-        Console.WriteLine($"Файл сохранен: {resultPath}");
         Console.WriteLine();
 
-        // Вывод таблицы на консоль
-        DisplayResultsInConsole(startValue, stopValue);
+        // Вычисляем табулирование для вывода в консоль
+        double[,] tabulation = ds.CalculateTabulation(startValue, stopValue);
 
-        // Вывод содержимого файла
-        Console.WriteLine("\nСодержимое файла:");
-        Console.WriteLine("========================================");
-        DisplayFileContents(resultPath);
+        Console.WriteLine("**************************************************************************");
+        Console.WriteLine("* РЕЗУЛЬТАТ:                                                            *");
+        Console.WriteLine("**************************************************************************");
 
-        Console.WriteLine("\nНажмите любую клавишу для завершения...");
+        // Вывод в консоль в виде таблицы
+        Console.WriteLine("x\t\tF(x)");
+        Console.WriteLine("-------------------");
+
+        for (int i = 0; i < tabulation.GetLength(0); i++)
+        {
+            Console.WriteLine($"{tabulation[i, 0]}\t\t{tabulation[i, 1]:F2}");
+        }
+
+        // Сохранение в файл с использованием нового метода
+        string filePath = ds.SaveToFileTextData(startValue, stopValue);
+
+        Console.WriteLine();
+        Console.WriteLine($"Результат сохранен в файл: {filePath}");
+
         Console.ReadKey();
-    }
-
-    static void DisplayResultsInConsole(int startValue, int stopValue)
-    {
-        Console.WriteLine("Таблица значений функции:");
-        Console.WriteLine("┌───────┬────────────┐");
-        Console.WriteLine("│   x   │    F(x)    │");
-        Console.WriteLine("├───────┼────────────┤");
-
-        for (int x = startValue; x <= stopValue; x++)
-        {
-            double result = CalculateFunctionForDisplay(x);
-            Console.WriteLine($"│ {x,5} │ {result,10:F2} │");
-        }
-
-        Console.WriteLine("└───────┴────────────┘");
-    }
-
-    static void DisplayFileContents(string filePath)
-    {
-        if (File.Exists(filePath))
-        {
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines)
-            {
-                Console.WriteLine(line);
-            }
-        }
-        else
-        {
-            Console.WriteLine("Файл не найден!");
-        }
-    }
-
-    private static double CalculateFunctionForDisplay(int x)
-    {
-        // Проверка деления на ноль
-        if (Math.Abs(x) < double.Epsilon)
-        {
-            return 0;
-        }
-
-        return Math.Sin(x) + (Math.Cos(2 * x) / 2) - 1 + (5 * x);
     }
 }

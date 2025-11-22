@@ -6,38 +6,66 @@ public class DataService : ISprint5Task1V9
 {
     public string SaveToFileTextData(int startValue, int stopValue)
     {
-        string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask1.txt");
+        string path = $"OutPutFileTask1.txt";
 
         using (StreamWriter writer = new StreamWriter(path))
         {
-            writer.WriteLine("Табулирование функции F(x) = sin(x) + cos(2x)/2 - 1 + 5x");
-            writer.WriteLine($"Диапазон: [{startValue}; {stopValue}], шаг: 1");
-            writer.WriteLine("------------------------");
-            writer.WriteLine("  x   |    F(x)   ");
-            writer.WriteLine("------------------------");
+            writer.WriteLine("x\t\tF(x)");
+            writer.WriteLine("-------------------");
 
             for (int x = startValue; x <= stopValue; x++)
             {
-                double result = CalculateFunction(x);
-                writer.WriteLine($"{x,5} | {result,9:F2}");
+                double fx = CalculateFunction(x);
+                writer.WriteLine($"{x}\t\t{fx:F2}");
             }
-
-            writer.WriteLine("------------------------");
         }
 
-        return path;
+        return Path.GetFullPath(path);
     }
 
-    private double CalculateFunction(int x)
+    public double CalculateFunction(double x)
     {
-        // Проверка деления на ноль
-        // В данной функции нет деления на x, но оставляем для демонстрации
-        if (Math.Abs(x) < double.Epsilon)
+        try
+        {
+            // F(x) = sin(x) + cos(2x)/2 - 1
+            double denominator = 2; // знаменатель
+
+            // Проверка деления на ноль
+            if (Math.Abs(denominator) < double.Epsilon)
+            {
+                return 0;
+            }
+
+            double result = Math.Sin(x) + (Math.Cos(2 * x) / denominator) - 1;
+
+            // Проверка на особые случаи
+            if (double.IsNaN(result) || double.IsInfinity(result))
+            {
+                return 0;
+            }
+
+            return Math.Round(result, 2);
+        }
+        catch
         {
             return 0;
         }
+    }
 
-        // F(x) = sin(x) + cos(2x)/2 - 1 + 5x
-        return Math.Sin(x) + (Math.Cos(2 * x) / 2) - 1 + (5 * x);
+    public double[,] CalculateTabulation(int startValue, int stopValue)
+    {
+        int count = stopValue - startValue + 1;
+        double[,] result = new double[count, 2];
+        int index = 0;
+
+        for (int x = startValue; x <= stopValue; x++)
+        {
+            double fx = CalculateFunction(x);
+            result[index, 0] = x;
+            result[index, 1] = fx;
+            index++;
+        }
+
+        return result;
     }
 }
