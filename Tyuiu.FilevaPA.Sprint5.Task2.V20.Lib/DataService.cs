@@ -7,17 +7,20 @@ public class DataService : ISprint5Task2V20
         string tempPath = Path.GetTempPath();
         string filePath = Path.Combine(tempPath, "OutPutFileTask2.csv");
 
+        // Преобразуем массив перед сохранением
+        int[,] transformedMatrix = TransformArray(matrix);
+
         using (StreamWriter writer = new StreamWriter(filePath))
         {
-            int rows = matrix.GetLength(0);
-            int cols = matrix.GetLength(1);
+            int rows = transformedMatrix.GetLength(0);
+            int cols = transformedMatrix.GetLength(1);
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    // Записываем значение в файл
-                    writer.Write(matrix[i, j]);
+                    // Записываем преобразованное значение в файл
+                    writer.Write(transformedMatrix[i, j]);
                     if (j < cols - 1)
                         writer.Write(";");
                 }
@@ -38,6 +41,7 @@ public class DataService : ISprint5Task2V20
         {
             for (int j = 0; j < cols; j++)
             {
+                // Положительные -> 1, отрицательные -> 0
                 result[i, j] = (array[i, j] > 0) ? 1 : 0;
             }
         }

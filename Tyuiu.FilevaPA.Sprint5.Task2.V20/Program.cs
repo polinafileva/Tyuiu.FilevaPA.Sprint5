@@ -33,15 +33,16 @@ internal class Program
         Console.WriteLine("* РЕЗУЛЬТАТ:                                                            *");
         Console.WriteLine("**************************************************************************");
 
-        // Преобразование массива
+        // Сохранение в файл - метод сам преобразует массив
+        string filePath = ds.SaveToFileTextData(array);
+
+        // Получаем преобразованный массив для вывода на консоль
         int[,] transformedArray = ds.TransformArray(array);
 
         // Вывод преобразованного массива
         Console.WriteLine("Преобразованный массив:");
         PrintArray(transformedArray);
 
-        // Сохранение в файл с использованием нового метода
-        string filePath = ds.SaveToFileTextData(transformedArray);
         Console.WriteLine($"Результат сохранен в файл: {filePath}");
 
         Console.ReadKey();
