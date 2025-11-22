@@ -10,13 +10,13 @@ internal class Program
         Console.WriteLine("* Спринт #5                                                               *");
         Console.WriteLine("* Тема: Табулирование функции и запись в файл                            *");
         Console.WriteLine("* Задание #1                                                              *");
-        Console.WriteLine("* Вариант #9                                                             *");
+        Console.WriteLine("* Вариант #9                                                              *");
         Console.WriteLine("* Выполнила: Филева Полина Алексеевна | ИСПБ-25-1                        *");
         Console.WriteLine("***************************************************************************");
         Console.WriteLine("* УСЛОВИЕ:                                                                *");
-        Console.WriteLine("* Дана функция F(x) = sin(x) + cos(2x)/2 - 1. Произвести табулирование   *");
-        Console.WriteLine("* на диапазоне [-5; 5] с шагом 1. Результат сохранить в файл и вывести   *");
-        Console.WriteLine("* на консоль в таблицу. Округлить до двух знаков после запятой.          *");
+        Console.WriteLine("* Дана функция F(x) = cos(2x) + sin(x)/(x + 2.5) + 2x. Произвести       *");
+        Console.WriteLine("* табулирование на диапазоне [-5; 5] с шагом 1. Результат сохранить     *");
+        Console.WriteLine("* в файл и вывести на консоль в таблицу. Округлить до двух знаков.      *");
         Console.WriteLine("***************************************************************************");
         Console.WriteLine("* ИСХОДНЫЕ ДАННЫЕ:                                                        *");
         Console.WriteLine("***************************************************************************");
@@ -27,7 +27,7 @@ internal class Program
 
         Console.WriteLine($"Диапазон: [{startValue}; {stopValue}]");
         Console.WriteLine($"Шаг: {step}");
-        Console.WriteLine($"Функция: F(x) = sin(x) + cos(2x)/2 - 1");
+        Console.WriteLine($"Функция: F(x) = cos(2x) + sin(x)/(x + 2.5) + 2x");
 
         Console.WriteLine("***************************************************************************");
         Console.WriteLine("* РЕЗУЛЬТАТ:                                                              *");
@@ -68,9 +68,17 @@ internal class Program
     {
         try
         {
-            double sinX = Math.Sin(x);
             double cos2x = Math.Cos(2 * x);
-            double y = sinX + (cos2x / 2) - 1;
+            double sinX = Math.Sin(x);
+            double denominator = x + 2.5;
+
+            if (Math.Abs(denominator) < 0.0001)
+            {
+                return 0;
+            }
+
+            double fraction = sinX / denominator;
+            double y = cos2x + fraction + 2 * x;
             return Math.Round(y, 2);
         }
         catch
