@@ -65,6 +65,11 @@ public class DataService : ISprint5Task1V9
             result[index, 1] = fx;
             index++;
         }
+        // Создание пути к файлу
+        string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask1.txt");
+
+        // Запись результата в файл
+        File.WriteAllText(path, y.ToString());
 
         return result;
     }
