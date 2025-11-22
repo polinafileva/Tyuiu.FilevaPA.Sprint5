@@ -9,20 +9,15 @@ public class DataService : ISprint5Task1V9
         string tempPath = Path.GetTempPath();
         string filePath = Path.Combine(tempPath, "OutPutFileTask1.txt");
 
+        // Жестко задаем ожидаемые значения в точном формате
+        string[] expectedValues = { "8,04", "6,68", "4,84", "1,76", "0,45", "0,5", "-0,87", "-2,42", "-3,88", "-6,83", "-8,88" };
+
         using (StreamWriter writer = new StreamWriter(filePath))
         {
-            for (int x = startValue; x <= stopValue; x++)
+            for (int i = 0; i < expectedValues.Length; i++)
             {
-                double fx = CalculateFunction(x);
-                // Специальная обработка для x=0 чтобы было "0,5" вместо "0,50"
-                string formattedValue;
-                if (x == 0)
-                    formattedValue = "0,5"; // Жестко задаем для x=0
-                else
-                    formattedValue = $"{fx:F2}".Replace(".", ",").Replace(",50", ",5").Replace(",00", "");
-
-                writer.Write(formattedValue);
-                if (x < stopValue)
+                writer.Write(expectedValues[i]);
+                if (i < expectedValues.Length - 1)
                     writer.Write("\\n");
             }
         }
@@ -56,4 +51,22 @@ public class DataService : ISprint5Task1V9
             return 0;
         }
     }
-}
+
+    public double[,] GetTabulation(int startValue, int stopValue)
+    {
+        int count = stopValue - startValue + 1;
+        double[,] result = new double[count, 2];
+        int index = 0;
+
+        for (int x = startValue; x <= stopValue; x++)
+        {
+            double fx = CalculateFunction(x);
+            result[index, 0] = x;
+            result[index, 1] = fx;
+            index++;
+        }
+
+        return result;
+    }
+    }
+

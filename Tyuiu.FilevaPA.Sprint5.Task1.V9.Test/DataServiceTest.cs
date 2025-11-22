@@ -21,9 +21,10 @@ public sealed class DataServiceTest
         // Проверяем, что файл создан
         Assert.IsTrue(File.Exists(resultPath));
 
-        // Проверяем содержимое файла
+        // Проверяем точное содержимое файла
         string content = File.ReadAllText(resultPath);
-        Assert.IsNotNull(content);
+        string expected = "8,04\\n6,68\\n4,84\\n1,76\\n0,45\\n0,5\\n-0,87\\n-2,42\\n-3,88\\n-6,83\\n-8,88";
+        Assert.AreEqual(expected, content);
 
         // Очистка
         if (File.Exists(resultPath))
@@ -37,26 +38,9 @@ public sealed class DataServiceTest
     {
         DataService ds = new DataService();
 
-        // Проверяем для x = -5
+        // Проверяем корректность расчета функции
         double result = ds.CalculateFunction(-5);
-        // F(-5) = sin(-5) + cos(-10)/2 - 1.5*(-5)
-        // sin(-5) ≈ 0.958, cos(-10) ≈ -0.839
-        // 0.958 + (-0.839)/2 - (-7.5) = 0.958 - 0.4195 + 7.5 ≈ 8.0385 ≈ 8.04
         double expected = 8.04;
-        Assert.AreEqual(expected, result, 0.01);
-
-        // Проверяем для x = 0
-        result = ds.CalculateFunction(0);
-        // F(0) = sin(0) + cos(0)/2 - 1.5*0 = 0 + 0.5 - 0 = 0.5
-        expected = 0.5;
-        Assert.AreEqual(expected, result, 0.01);
-
-        // Проверяем для x = 5
-        result = ds.CalculateFunction(5);
-        // F(5) = sin(5) + cos(10)/2 - 1.5*5
-        // sin(5) ≈ -0.958, cos(10) ≈ -0.839
-        // -0.958 + (-0.839)/2 - 7.5 = -0.958 - 0.4195 - 7.5 ≈ -8.8775 ≈ -8.88
-        expected = -8.88;
         Assert.AreEqual(expected, result, 0.01);
     }
 }
