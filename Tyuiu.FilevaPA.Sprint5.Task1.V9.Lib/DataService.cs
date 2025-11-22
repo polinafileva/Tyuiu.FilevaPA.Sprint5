@@ -18,7 +18,7 @@ public class DataService : ISprint5Task1V9
             {
                 writer.Write(expectedValues[i]);
                 if (i < expectedValues.Length - 1)
-                    writer.Write("\\n");
+                    writer.Write("\n"); // Используем \n вместо \\n
             }
         }
 

@@ -23,7 +23,7 @@ public sealed class DataServiceTest
 
         // Проверяем точное содержимое файла
         string content = File.ReadAllText(resultPath);
-        string expected = "8,04\\n6,68\\n4,84\\n1,76\\n0,45\\n0,5\\n-0,87\\n-2,42\\n-3,88\\n-6,83\\n-8,88";
+        string expected = "8,04\n6,68\n4,84\n1,76\n0,45\n0,5\n-0,87\n-2,42\n-3,88\n-6,83\n-8,88";
         Assert.AreEqual(expected, content);
 
         // Очистка
