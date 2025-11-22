@@ -1,4 +1,5 @@
 ﻿namespace Tyuiu.FilevaPA.Sprint5.Task0.V25.Lib;
+
 using tyuiu.cources.programming.interfaces.Sprint5;
 
 
@@ -14,13 +15,12 @@ public class DataService : ISprint5Task0V25
         // Округление до трех знаков после запятой
         y = Math.Round(y, 3);
 
-        // Сохранение в файл
-        string path = $@"{Directory.GetCurrentDirectory()}\OutPutFileTask0.txt";
+        // Создание пути к файлу
+        string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask0.txt");
 
-        using (StreamWriter writer = new StreamWriter(path))
-        {
-            writer.WriteLine(y);
-        }
+        // Запись результата в файл
+        File.WriteAllText(path, y.ToString());
+
 
         return path;
     }
