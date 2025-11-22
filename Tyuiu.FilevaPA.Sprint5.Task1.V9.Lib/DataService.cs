@@ -6,8 +6,10 @@ public class DataService : ISprint5Task1V9
 {
     public string SaveToFileTextData(int startValue, int stopValue)
     {
-        
-        string path = "OutPutFileTask1.txt"; // Будет создан в bin/Debug/net8.0/
+
+        // Получаем путь к временной директории, где есть права на запись
+        string tempPath = Path.GetTempPath();
+        string path = Path.Combine(tempPath, "OutPutFileTask1.txt");
 
         using (StreamWriter writer = new StreamWriter(path))
         {
