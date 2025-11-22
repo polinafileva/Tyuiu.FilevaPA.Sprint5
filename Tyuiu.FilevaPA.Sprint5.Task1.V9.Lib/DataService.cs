@@ -12,13 +12,12 @@ public class DataService : ISprint5Task1V9
 
         using (StreamWriter writer = new StreamWriter(filePath))
         {
-            writer.WriteLine("x\t\tF(x)");
-            writer.WriteLine("-------------------");
-
             for (int x = startValue; x <= stopValue; x++)
             {
                 double fx = CalculateFunction(x);
-                writer.WriteLine($"{x}\t\t{fx:F2}");
+                writer.Write($"{fx:F2}");
+                if (x < stopValue)
+                    writer.Write("\\n");
             }
         }
 
@@ -38,7 +37,10 @@ public class DataService : ISprint5Task1V9
                 return 0;
             }
 
-            double result = Math.Sin(x) + (Math.Cos(2 * x) / denominator) - 1;
+            // Правильный расчет функции
+            double sinX = Math.Sin(x);
+            double cos2x = Math.Cos(2 * x);
+            double result = sinX + (cos2x / denominator) - 1;
 
             // Проверка на особые случаи
             if (double.IsNaN(result) || double.IsInfinity(result))

@@ -43,6 +43,14 @@ internal class Program
         Console.WriteLine();
         Console.WriteLine($"Результат сохранен в файл: {filePath}");
 
+        // Дополнительный вывод для проверки
+        Console.WriteLine("\nПроверка значений функции:");
+        for (int x = startValue; x <= stopValue; x++)
+        {
+            double fx = ds.CalculateFunction(x);
+            Console.WriteLine($"F({x}) = {fx:F2}");
+        }
+
         Console.ReadKey();
     }
 }
