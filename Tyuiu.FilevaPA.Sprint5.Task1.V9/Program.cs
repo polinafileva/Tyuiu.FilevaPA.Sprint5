@@ -9,7 +9,7 @@ internal class Program
     {
         DataService ds = new DataService();
 
-        Console.Title = "Спринт #5 | Выполнила: Филева П. А. | ИСПБ-25-1";
+        Console.Title = "Спринт #5 | Выполнила: Филева Полина Алексеевна. | ИСПБ-25-1";
         Console.WriteLine("**************************************************************************");
         Console.WriteLine("* Спринт #5                                                              *");
         Console.WriteLine("* Тема: Табулирование функции и запись в файл                           *");
