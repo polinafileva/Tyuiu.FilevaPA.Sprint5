@@ -16,7 +16,7 @@ internal class Program
         int startValue = -5;
         int stopValue = 5;
 
-        Console.WriteLine("Функция: F(x) = sin(x) + cos(2x)/2 - 1");
+        Console.WriteLine("Функция: F(x) = sin(x) + cos(2x)/2 - 1.5x");
         Console.WriteLine($"Диапазон: [{startValue}; {stopValue}]");
         Console.WriteLine($"Шаг: 1");
         Console.WriteLine();
@@ -37,19 +37,11 @@ internal class Program
             Console.WriteLine($"{tabulation[i, 0]}\t\t{tabulation[i, 1]:F2}");
         }
 
-        // Сохранение в файл с использованием основного метода
+        // Сохранение в файл
         string filePath = ds.SaveToFileTextData(startValue, stopValue);
 
         Console.WriteLine();
         Console.WriteLine($"Результат сохранен в файл: {filePath}");
-
-        // Дополнительный вывод для проверки
-        Console.WriteLine("\nПроверка значений функции:");
-        for (int x = startValue; x <= stopValue; x++)
-        {
-            double fx = ds.CalculateFunction(x);
-            Console.WriteLine($"F({x}) = {fx:F2}");
-        }
 
         Console.ReadKey();
     }

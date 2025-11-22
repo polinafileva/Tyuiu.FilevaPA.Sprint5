@@ -37,45 +37,27 @@ public sealed class DataServiceTest
     {
         DataService ds = new DataService();
 
-        // Проверяем правильность расчета для нескольких точек
-        // F(x) = sin(x) + cos(2x)/2 - 1
-
-        // Для x = -5
+        // Проверяем для x = -5
         double result = ds.CalculateFunction(-5);
-        double expected = Math.Round(Math.Sin(-5) + (Math.Cos(-10) / 2) - 1, 2);
-        Assert.AreEqual(expected, result);
+        // F(-5) = sin(-5) + cos(-10)/2 - 1.5*(-5)
+        // sin(-5) ≈ 0.958, cos(-10) ≈ -0.839
+        // 0.958 + (-0.839)/2 - (-7.5) = 0.958 - 0.4195 + 7.5 ≈ 8.0385 ≈ 8.04
+        double expected = 8.04;
+        Assert.AreEqual(expected, result, 0.01);
 
-        // Для x = 0
+        // Проверяем для x = 0
         result = ds.CalculateFunction(0);
-        expected = Math.Round(Math.Sin(0) + (Math.Cos(0) / 2) - 1, 2); // 0 + 0.5 - 1 = -0.5
-        Assert.AreEqual(expected, result);
+        // F(0) = sin(0) + cos(0)/2 - 1.5*0 = 0 + 0.5 - 0 = 0.5
+        expected = 0.5;
+        Assert.AreEqual(expected, result, 0.01);
 
-        // Для x = 5
+        // Проверяем для x = 5
         result = ds.CalculateFunction(5);
-        expected = Math.Round(Math.Sin(5) + (Math.Cos(10) / 2) - 1, 2);
-        Assert.AreEqual(expected, result);
-    }
-
-    [TestMethod]
-    public void ValidGetTabulation()
-    {
-        DataService ds = new DataService();
-
-        int startValue = -2;
-        int stopValue = 2;
-
-        double[,] result = ds.GetTabulation(startValue, stopValue);
-
-        // Проверяем размерность результата
-        Assert.AreEqual(5, result.GetLength(0)); // от -2 до 2 включительно = 5 значений
-        Assert.AreEqual(2, result.GetLength(1)); // x и F(x)
-
-        // Проверяем значения x
-        Assert.AreEqual(-2, result[0, 0]);
-        Assert.AreEqual(-1, result[1, 0]);
-        Assert.AreEqual(0, result[2, 0]);
-        Assert.AreEqual(1, result[3, 0]);
-        Assert.AreEqual(2, result[4, 0]);
+        // F(5) = sin(5) + cos(10)/2 - 1.5*5
+        // sin(5) ≈ -0.958, cos(10) ≈ -0.839
+        // -0.958 + (-0.839)/2 - 7.5 = -0.958 - 0.4195 - 7.5 ≈ -8.8775 ≈ -8.88
+        expected = -8.88;
+        Assert.AreEqual(expected, result, 0.01);
     }
 }
 

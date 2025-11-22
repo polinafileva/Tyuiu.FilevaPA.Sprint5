@@ -15,7 +15,7 @@ public class DataService : ISprint5Task1V9
             for (int x = startValue; x <= stopValue; x++)
             {
                 double fx = CalculateFunction(x);
-                writer.Write($"{fx:F2}");
+                writer.Write($"{fx:F2}".Replace(".", ",")); // Заменяем точку на запятую
                 if (x < stopValue)
                     writer.Write("\\n");
             }
@@ -28,7 +28,7 @@ public class DataService : ISprint5Task1V9
     {
         try
         {
-            // F(x) = sin(x) + cos(2x)/2 - 1
+            // F(x) = sin(x) + cos(2x)/2 - 1.5x
             double denominator = 2; // знаменатель
 
             // Проверка деления на ноль
@@ -37,10 +37,7 @@ public class DataService : ISprint5Task1V9
                 return 0;
             }
 
-            // Правильный расчет функции
-            double sinX = Math.Sin(x);
-            double cos2x = Math.Cos(2 * x);
-            double result = sinX + (cos2x / denominator) - 1;
+            double result = Math.Sin(x) + (Math.Cos(2 * x) / denominator) - (1.5 * x);
 
             // Проверка на особые случаи
             if (double.IsNaN(result) || double.IsInfinity(result))
