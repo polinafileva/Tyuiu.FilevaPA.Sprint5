@@ -1,6 +1,6 @@
 ﻿namespace Tyuiu.FilevaPA.Sprint5.Task4.V10.Lib;
 using tyuiu.cources.programming.interfaces.Sprint5;
-public class DataService : ISprint5Task4V9
+public class DataService : ISprint5Task4V10
 {
     public double LoadFromDataFile(string path)
     {
