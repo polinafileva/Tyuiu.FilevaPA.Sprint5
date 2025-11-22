@@ -7,6 +7,8 @@ public class DataService : ISprint5Task1V9
         // Создание пути к файлу
         string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask1.txt");
 
+        
+
         using (StreamWriter writer = new StreamWriter(path))
         {
             // Табулирование функции
