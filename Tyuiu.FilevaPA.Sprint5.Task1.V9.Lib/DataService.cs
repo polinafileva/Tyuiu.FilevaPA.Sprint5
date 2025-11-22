@@ -7,11 +7,10 @@ public class DataService : ISprint5Task1V9
     public string SaveToFileTextData(int startValue, int stopValue)
     {
 
-        // Получаем путь к временной директории, где есть права на запись
         string tempPath = Path.GetTempPath();
-        string path = Path.Combine(tempPath, "OutPutFileTask1.txt");
+        string filePath = Path.Combine(tempPath, "OutPutFileTask1.txt");
 
-        using (StreamWriter writer = new StreamWriter(path))
+        using (StreamWriter writer = new StreamWriter(filePath))
         {
             writer.WriteLine("x\t\tF(x)");
             writer.WriteLine("-------------------");
@@ -23,7 +22,7 @@ public class DataService : ISprint5Task1V9
             }
         }
 
-        return Path.GetFullPath(path);
+        return filePath;
     }
 
     public double CalculateFunction(double x)
@@ -31,8 +30,9 @@ public class DataService : ISprint5Task1V9
         try
         {
             // F(x) = sin(x) + cos(2x)/2 - 1
-            double denominator = 2;
+            double denominator = 2; // знаменатель
 
+            // Проверка деления на ноль
             if (Math.Abs(denominator) < double.Epsilon)
             {
                 return 0;
@@ -40,6 +40,7 @@ public class DataService : ISprint5Task1V9
 
             double result = Math.Sin(x) + (Math.Cos(2 * x) / denominator) - 1;
 
+            // Проверка на особые случаи
             if (double.IsNaN(result) || double.IsInfinity(result))
             {
                 return 0;
@@ -51,5 +52,22 @@ public class DataService : ISprint5Task1V9
         {
             return 0;
         }
+    }
+
+    public double[,] GetTabulation(int startValue, int stopValue)
+    {
+        int count = stopValue - startValue + 1;
+        double[,] result = new double[count, 2];
+        int index = 0;
+
+        for (int x = startValue; x <= stopValue; x++)
+        {
+            double fx = CalculateFunction(x);
+            result[index, 0] = x;
+            result[index, 1] = fx;
+            index++;
+        }
+
+        return result;
     }
 }

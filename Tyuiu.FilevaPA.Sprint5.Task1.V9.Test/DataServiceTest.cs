@@ -23,13 +23,60 @@ public sealed class DataServiceTest
 
         // Проверяем содержимое файла
         string[] lines = File.ReadAllLines(resultPath);
-        Assert.IsTrue(lines.Length >= 5);
+        Assert.IsTrue(lines.Length >= 5); // заголовок + 5 строк данных
+
+        // Проверяем заголовок
+        Assert.AreEqual("x\t\tF(x)", lines[0]);
+        Assert.AreEqual("-------------------", lines[1]);
 
         // Очистка
         if (File.Exists(resultPath))
         {
             File.Delete(resultPath);
         }
+    }
+
+    [TestMethod]
+    public void ValidCalculateFunction()
+    {
+        DataService ds = new DataService();
+
+        // Тест для x = 0
+        double x = 0;
+        double result = ds.CalculateFunction(x);
+        double expected = Math.Round(Math.Sin(0) + (Math.Cos(0) / 2) - 1, 2); // 0 + 0.5 - 1 = -0.5
+        Assert.AreEqual(expected, result);
+
+        // Тест для x = 1
+        x = 1;
+        result = ds.CalculateFunction(x);
+        expected = Math.Round(Math.Sin(1) + (Math.Cos(2) / 2) - 1, 2);
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void ValidGetTabulation()
+    {
+        DataService ds = new DataService();
+
+        int startValue = -1;
+        int stopValue = 1;
+
+        double[,] result = ds.GetTabulation(startValue, stopValue);
+
+        // Проверяем размерность результата
+        Assert.AreEqual(3, result.GetLength(0)); // от -1 до 1 включительно = 3 значения
+        Assert.AreEqual(2, result.GetLength(1)); // x и F(x)
+
+        // Проверяем значения x
+        Assert.AreEqual(-1, result[0, 0]);
+        Assert.AreEqual(0, result[1, 0]);
+        Assert.AreEqual(1, result[2, 0]);
+
+        // Проверяем, что значения F(x) округлены до 2 знаков
+        Assert.AreEqual(Math.Round(ds.CalculateFunction(-1), 2), result[0, 1]);
+        Assert.AreEqual(Math.Round(ds.CalculateFunction(0), 2), result[1, 1]);
+        Assert.AreEqual(Math.Round(ds.CalculateFunction(1), 2), result[2, 1]);
     }
 }
 

@@ -9,21 +9,7 @@ internal class Program
     {
         DataService ds = new DataService();
 
-        Console.Title = "Спринт #5 | Выполнила: Филева Полина Алексеевна. | ИСПБ-25-1";
         Console.WriteLine("**************************************************************************");
-        Console.WriteLine("* Спринт #5                                                              *");
-        Console.WriteLine("* Тема: Табулирование функции и запись в файл                           *");
-        Console.WriteLine("* Задание #1                                                             *");
-        Console.WriteLine("* Вариант #9                                                           *");
-        Console.WriteLine("* Выполнила: Филева Полина Алексеевна | ИСПБ-25-1                       *");
-        Console.WriteLine("**************************************************************************");
-
-        Console.WriteLine("* УСЛОВИЕ:                                                                *");
-        Console.WriteLine("* Дана функция: F(x) = sin(x) + cos(2x)/2 - 1 + 5x                        *");
-        Console.WriteLine("* Произвести табулирование на диапазоне [-5; 5] с шагом 1.                *");
-        Console.WriteLine("* При делении на ноль вернуть 0. Результат сохранить в файл и вывести    *");
-        Console.WriteLine("* на консоль в таблицу. Округлить до двух знаков после запятой.          *");
-        Console.WriteLine("***************************************************************************");
         Console.WriteLine("* ИСХОДНЫЕ ДАННЫЕ:                                                      *");
         Console.WriteLine("**************************************************************************");
 
@@ -35,8 +21,8 @@ internal class Program
         Console.WriteLine($"Шаг: 1");
         Console.WriteLine();
 
-        // Вычисляем табулирование для вывода в консоль
-        double[,] tabulation = ds.CalculateTabulation(startValue, stopValue);
+        // Получаем табулирование для вывода в консоль
+        double[,] tabulation = ds.GetTabulation(startValue, stopValue);
 
         Console.WriteLine("**************************************************************************");
         Console.WriteLine("* РЕЗУЛЬТАТ:                                                            *");
@@ -51,7 +37,7 @@ internal class Program
             Console.WriteLine($"{tabulation[i, 0]}\t\t{tabulation[i, 1]:F2}");
         }
 
-        // Сохранение в файл с использованием нового метода
+        // Сохранение в файл с использованием основного метода
         string filePath = ds.SaveToFileTextData(startValue, stopValue);
 
         Console.WriteLine();
